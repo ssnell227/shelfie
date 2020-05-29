@@ -29,15 +29,13 @@ class Product extends Component {
         const id = this.props.data.id
         return (
             <div className='product'>
-                <div className='product-image'>
                     <img src={this.state.imgURL} alt={this.state.name} />
-                </div>
                 <div className='product-info'>
                     <p className='product-title'>{this.state.name}</p>
-                    <p className='product-price'>{this.state.price}</p>
+                    <p className='product-price'>${this.state.price}</p>
                 </div>
                 <div className='product-buttons'>
-                    <button onClick={() => this.props.deleteItem(id)}>Delete</button>
+                    <button className='' onClick={() => this.props.deleteItem(id)}>Delete</button>
                     <Link to={`/edit/${this.props.data.id}`}><button>Edit</button></Link>
                 </div>
             </div>)

@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+.App {
+  min-width: 450px;
+}
 
 button {
   padding: 8px 12px;
@@ -27,7 +30,7 @@ button {
   align-items: center;
 }
 
-.header div{
+.header-buttons{
   display: flex;
   width: 280px;
   justify-content: space-between;
@@ -51,7 +54,6 @@ button {
 .product {
   background-color: #d34735;
   width: 600px;
-  height: 230px;
   position: relative;
   padding: 15px;
   margin:  20px auto;
@@ -128,3 +130,46 @@ button {
   background-color: #ed6b5a;
   margin: 5px;
 }
+
+@media (max-width: 830px) {
+  .product {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+  }
+  .product img {
+    align-self: center;
+  }
+  .product-info {
+    flex-direction: row;
+    justify-content: space-between;
+    position: static;
+  }
+  .product-buttons {
+    flex-direction: row;
+    position: static;
+  }
+}
+
+@media (max-width: 650px) {
+  .header-buttons {
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .header-buttons button {
+    font-size: 16px;
+    padding: 3px 10px;
+    width: 125px;
+  }
+}
+
+@media(max-width: 500px) {
+  .product {
+    width: 350px;
+  }
+}
+
