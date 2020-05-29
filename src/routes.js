@@ -5,8 +5,8 @@ import Form from './components/form/Form'
 
 export default (
     <Switch>
-        <Route exact path='/' component={Dashboard}/>
-        <Route path='add' component={Form}/>
-        <Route path='edit/:id' component={Form}/>
+        <Route key={Date.now()} exact path='/' component={Dashboard}/>
+        <Route key={Date.now()} path='/add' component={Form}/>
+        <Route path='/edit/:id' component={Form}/>
     </Switch>
 )

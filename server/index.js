@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express'),
     massive = require('massive'),
+    cors = require('cors'),
     ctrl = require('./controller'),
     {SERVER_PORT, CONNECTION_STRING} = process.env,
     port = SERVER_PORT
@@ -17,6 +18,8 @@ massive({
 })
 
 app.use(express.json())
+
+app.use(cors())
 
 app.get('/api/inventory', ctrl.getAll)
 

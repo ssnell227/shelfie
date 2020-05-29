@@ -1,44 +1,78 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
 
+import { Link } from 'react-router-dom'
+
 class Form extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
         this.state = {
             name: '',
-            imgURL: '',
-            price: 0
+            img: '',
+            price: 0,
+            editing: false
         }
         this.handleInput = this.handleInput.bind(this)
         this.handleCancel = this.handleInput.bind(this)
+        this.createItem = this.createItem.bind(this)
+        this.updateItem = this.updateItem.bind(this)
     }
 
-    handleInput (e) {
+    handleInput(e) {
         this.setState({
             [e.target.dataset.name]: e.target.value
         })
     }
 
-    handleCancel () {
-        //maybe don't need? going to be a route later.  or just use history
+    updateItem() {
+        const { id, name, price, img } = this.state
+        axios.put(`http://localhost:4000/api/inventory/${id}`, { name, price, img })
+            .then(() => this.props.history.push('/'))
     }
 
-    componentDidMount () {
-        let id = this.props.match.params.id
+    createItem() {
+        const { name, price, img } = this.state
+        axios.post(`http://localhost:4000/api/inventory`, { name, price, img })
+            .then(() => this.props.history.push('/'))
+    }
+
+
+    componentDidMount() {
+        let id = +this.props.match.params.id
         if (id) {
-            // axios.get(`http://localhost:4000/api/`) NOT FINISHED
+            this.setState(
+                { editing: true }
+            )
+            axios.get(`http://localhost:4000/api/inventory/${id}`)
+                .then(res => {
+                    this.setState({
+                        id: res.data[0].id,
+                        name: res.data[0].name,
+                        img: res.data[0].img,
+                        price: res.data[0].price
+                    })
+                })
         }
     }
 
-    render () {
+
+    render() {
         return (
-        <div>
-            <input value={this.state.imgURL} onChange={this.handleInput} data-name='imgURL' ></input>
-            <input value={this.state.name} onChange={this.handleInput} data-name='name'></input>
-            <input value={this.state.price} onChange={this.handleInput} data-name='price'></input>
-            <button onClick={this.handleCancel}>Cancel</button>
-            <button>Add to Inventory</button>
-        </div>)
+            <div className='form'>
+                <img src={this.state.img === '' ? 'No_image_available.svg' : this.state.img} alt='item'></img>
+                <p className='form-text'>Image URL:</p>
+                <input value={this.state.img} onChange={this.handleInput} data-name='img' ></input>
+                <p className='form-text'>Product Name:</p>
+                <input value={this.state.name} onChange={this.handleInput} data-name='name'></input>
+                <p className='form-text'>Price:</p>
+                <input value={this.state.price} onChange={this.handleInput} data-name='price'></input>
+                <div className='form-buttons'>
+                    <Link to='/'><button onClick={this.handleCancel}>Cancel</button></Link>
+                    {this.state.editing === true ?
+                        <button onClick={this.updateItem}>Save</button> :
+                        <button onClick={this.createItem}>Add to Inventory</button>}
+                </div>
+            </div>)
     }
 }
 

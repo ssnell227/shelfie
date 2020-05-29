@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Dashboard from './components/dashboard/Dashboard'
-import Form from './components/form/Form'
 import Header from './components/header/Header'
 import routes from './routes'
 
