@@ -7,6 +7,7 @@ class Form extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: null,
             name: '',
             img: '',
             price: 0,
